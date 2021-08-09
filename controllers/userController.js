@@ -35,7 +35,7 @@ exports.updateUser = catchAsyncError(async (req, res, next) => {
     // if (req.file) filteredBody.photo = req.file.filename;
 
     // 3) Update user document
-    const updatedUser = await User.findOneAndUpdate(req.params.userName, req.body, {
+    const updatedUser = await User.findOneAndUpdate(req.user.username, req.body, {
         new: true
     })
 
@@ -52,7 +52,7 @@ exports.updateUser = catchAsyncError(async (req, res, next) => {
 
 exports.deleteUser = catchAsyncError(async (req, res, next) => {
 
-    const deletedUser = await User.findOneAndDelete(req.params.userName);
+    const deletedUser = await User.findOneAndDelete(req.user.username);
 
     if (!deletedUser) {
         return next(new AppError('This user does not exist', 404));

@@ -7,11 +7,11 @@ router.post('/signup', authController.signup);
 
 router.post('/login', authController.login);
 
-router.patch('/updateUser/:userName', userController.updateUser);
+router.patch('/updateUser', authController.protect, userController.updateUser);
 
-router.delete('/deleteUser/:userName', userController.deleteUser);
+router.delete('/deleteUser', authController.protect, userController.deleteUser);
 
-router.get('/:userName', userController.getUser);
+router.get('/:userName', authController.protect, userController.getUser);
 
 // router
 //     .route('/')
