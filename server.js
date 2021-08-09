@@ -17,7 +17,7 @@ const app = require('./app');
 //   process.env.DATABASE_PASSWORD
 // );
 
-const DB = 'mongodb://localhost:27017/natours'; // local DB connection
+const DB = 'mongodb://localhost:27017/blog-db'; // local DB connection
 
 mongoose
     .connect(DB, {
