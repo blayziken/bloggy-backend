@@ -46,6 +46,8 @@ exports.updateUser = catchAsyncError(async (req, res, next) => {
             user: updatedUser
         }
     });
+
+    next();
 });
 
 

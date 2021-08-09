@@ -2,7 +2,7 @@ const User = require('./../models/userModel');
 const catchAsyncError = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const jwt = require('jsonwebtoken');
-
+const { promisify } = require('util');
 
 
 // USER SIGN UP
@@ -23,22 +23,22 @@ exports.signup = catchAsyncError(async (req, res, next) => {
 
 // USER LOGIN
 exports.login = catchAsyncError(async (req, res, next) => {
-    const { userName, password } = req.body;
+    const { username, password } = req.body;
 
     // 1) Check if email and password exist
-    if (!userName || !password) {
-        return next(new AppError('Please provide email and password!', 400));
+    if (!username || !password) {
+        return next(new AppError('Please provide username and password!', 400));
     }
 
     //(a) Check if user exists
-    const user = await User.findOne({ username: userName }).select('+password');
+    const user = await User.findOne({ username: username }).select('+password');
 
     if (!user || user.password != req.body.password) {
         return next(new AppError('Incorrect username or password', 401));
     }
 
     // Json Web Token Implementation
-    let token = jwt.sign({ userName }, process.env.JWT_SECRET, {
+    let token = jwt.sign({ username }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN
     })
 
@@ -69,9 +69,9 @@ exports.protect = async (req, res, next) => {
         req.headers.authorization.startsWith('Bearer')
     ) {
         token = req.headers.authorization.split(' ')[1];
-    } else if (req.cookies.jwt) {
-        token = req.cookies.jwt;
     }
+
+    console.log(token);
 
     if (!token) {
         return next(
@@ -79,11 +79,12 @@ exports.protect = async (req, res, next) => {
         );
     }
 
-    //2) CHECK IF TOKEN IS VALID OR NOT
+    // 2) CHECK IF TOKEN IS VALID OR NOT
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
     //3) IF VERIFICATION IS SUCCESSFUL, CHECK IF USER STILL EXISTS
     const currentUser = await User.findOne({ username: decoded.username });
+
     if (!currentUser) {
         return next(
             new AppError(
@@ -92,15 +93,6 @@ exports.protect = async (req, res, next) => {
             )
         );
     }
-    // const currentUser = await User.findById(decoded.id);
-    // if (!currentUser) {
-    //     return next(
-    //         new AppError(
-    //             'The user belonging to this token does no longer exist.',
-    //             401
-    //         )
-    //     );
-    // }
 
     //4) CHECK IF USER CHANGED PASSWORD AFTER TOKEN WAS ISSUED
     //To check if user recently changed password, we will create an instance method available on all documents
