@@ -7,6 +7,7 @@ router.post('/signup', authController.signup);
 
 router.patch('/updateUser/:username', userController.updateUser);
 
+router.delete('/deleteUser/:username', userController.deleteUser);
 
 
 // router

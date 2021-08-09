@@ -1,5 +1,6 @@
 const catchAsyncError = require('./../utils/catchAsync');
 const User = require('./../models/userModel');
+const AppError = require('./../utils/appError');
 
 exports.updateUser = catchAsyncError(async (req, res, next) => {
     // console.log(req.file);
@@ -25,9 +26,25 @@ exports.updateUser = catchAsyncError(async (req, res, next) => {
 
 
     res.status(200).json({
-        status: 'success',
+        status: 'User successfully updated',
         data: {
             user: updatedUser
         }
     });
+});
+
+
+
+exports.deleteUser = catchAsyncError(async (req, res, next) => {
+
+    const deletedUser = await User.findOneAndDelete(req.params.username);
+
+    if (!deletedUser) {
+        return next(new AppError('This user does not exist', 404));
+    }
+    res.status(204).json({
+        status: 'User successfully deleted',
+        data: null
+    });
+
 });
