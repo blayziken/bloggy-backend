@@ -5,10 +5,13 @@ const router = express.Router();
 
 router.post('/signup', authController.signup);
 
-router.patch('/updateUser/:username', userController.updateUser);
+router.post('/login', authController.login);
 
-router.delete('/deleteUser/:username', userController.deleteUser);
+router.patch('/updateUser/:userName', userController.updateUser);
 
+router.delete('/deleteUser/:userName', userController.deleteUser);
+
+router.get('/:userName', userController.getUser);
 
 // router
 //     .route('/')

@@ -70,7 +70,7 @@ const userSchema = new mongoose.Schema({
 //     next();
 // });
 
-// //TO CHECK IF PASSWORD DURING SIGN-IN  IS CORRECT:
+//TO CHECK IF PASSWORD DURING SIGN-IN  IS CORRECT:
 // userSchema.methods.correctPassword = async function (inputPasswood, userPassword) {
 //     //inputPasswood is not hashed,
 //     //userPassword is hashed

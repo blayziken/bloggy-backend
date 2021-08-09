@@ -2,6 +2,21 @@ const catchAsyncError = require('./../utils/catchAsync');
 const User = require('./../models/userModel');
 const AppError = require('./../utils/appError');
 
+exports.getUser = catchAsyncError(async (req, res, next) => {
+
+    const user = await User.findOne({ username: req.params.userName });
+
+    if (!user) {
+        return next(new AppError('This user does not exist', 404));
+    }
+
+    res.status(204).json({
+        status: 'Successful',
+        data: user
+    });
+
+});
+
 exports.updateUser = catchAsyncError(async (req, res, next) => {
     // console.log(req.file);
 
@@ -20,7 +35,7 @@ exports.updateUser = catchAsyncError(async (req, res, next) => {
     // if (req.file) filteredBody.photo = req.file.filename;
 
     // 3) Update user document
-    const updatedUser = await User.findOneAndUpdate(req.params.username, req.body, {
+    const updatedUser = await User.findOneAndUpdate(req.params.userName, req.body, {
         new: true
     })
 
@@ -37,7 +52,7 @@ exports.updateUser = catchAsyncError(async (req, res, next) => {
 
 exports.deleteUser = catchAsyncError(async (req, res, next) => {
 
-    const deletedUser = await User.findOneAndDelete(req.params.username);
+    const deletedUser = await User.findOneAndDelete(req.params.userName);
 
     if (!deletedUser) {
         return next(new AppError('This user does not exist', 404));
