@@ -10,7 +10,7 @@ exports.signup = catchAsyncError(async (req, res, next) => {
     const newuser = await User.create({
         name: req.body.name,
         username: req.body.username,
-        contactNumber: req.body,
+        contactNumber: req.body.contactNumber,
         email: req.body.email,
         password: req.body.password,
     });

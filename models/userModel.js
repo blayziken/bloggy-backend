@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     contactNumber: {
         type: String,
         required: [true, 'Please provide your contact number'],
-        minlength: 11,
+        maxlength: 11,
         // select: false
     },
     email: {
