@@ -31,17 +31,17 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         // select: false
     },
-    passwordConfirm: {
-        type: String,
-        required: [true, 'Please confirm your password'],
-        validate: {
-            // This only works on CREATE and SAVE!!!
-            validator: function (element) {
-                return element === this.password;  //returns true or false, if false then there is a validation error
-            },
-            message: 'Passwords are not the same!'
-        }
-    }
+    // passwordConfirm: {
+    //     type: String,
+    //     required: [true, 'Please confirm your password'],
+    //     validate: {
+    //         // This only works on CREATE and SAVE!!!
+    //         validator: function (element) {
+    //             return element === this.password;  //returns true or false, if false then there is a validation error
+    //         },
+    //         message: 'Passwords are not the same!'
+    //     }
+    // }
 });
 
 // // ENCRYPTING USER PASSWORD ON SIGN UP:
