@@ -1,2 +1,2 @@
 # bloggy
-A Blog App built with NodeJS (Backend) and Flutter 
+Backend (NodeJS) for Flutter Blog App
