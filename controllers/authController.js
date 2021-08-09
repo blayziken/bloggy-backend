@@ -1,3 +1,4 @@
+const User = require('./../models/userModel');
 const catchAsyncError = require('./../utils/catchAsync');
 
 exports.signup = catchAsyncError(async (req, res, next) => {
@@ -9,7 +10,7 @@ exports.signup = catchAsyncError(async (req, res, next) => {
     });
 
     res.status(200).json({
-        status: 'registered',
+        status: 'User Registered',
         data: {
             newuser
         }
