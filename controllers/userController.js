@@ -50,8 +50,6 @@ exports.updateUser = catchAsyncError(async (req, res, next) => {
     next();
 });
 
-
-
 exports.deleteUser = catchAsyncError(async (req, res, next) => {
 
     const deletedUser = await User.findOneAndDelete(req.user.username);
@@ -62,6 +60,21 @@ exports.deleteUser = catchAsyncError(async (req, res, next) => {
     res.status(204).json({
         status: 'User successfully deleted',
         data: null
+    });
+
+});
+
+exports.checkUsername = catchAsyncError(async (req, res, next) => {
+
+    const user = await User.findOne({ username: req.params.userName });
+
+    if (!user) {
+        return next(new AppError('This user does not exists', 404));
+    }
+
+    res.status(204).json({
+        status: 'User exists',
+        data: user
     });
 
 });
