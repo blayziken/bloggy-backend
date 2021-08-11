@@ -66,15 +66,17 @@ exports.deleteUser = catchAsyncError(async (req, res, next) => {
 
 exports.checkUsername = catchAsyncError(async (req, res, next) => {
 
-    const user = await User.findOne({ username: req.params.userName });
+    const user = await User.findOne({ username: req.params.userName }, (err, results) => {
+        if (err) return res.status(500).json({ message: err });
+    });
 
     if (user) {
-        res.status(200).json({
+        res.json({
             status: true,
             message: 'User exists'
         });
     } else {
-        res.status(500).json({
+        res.json({
             status: false,
             message: 'User does not exist'
         });
