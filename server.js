@@ -14,7 +14,8 @@ const app = require('./app');
 
 // const DB = 'mongodb://localhost:27017/blog-db'; // local DB connection
 
-const DB = "mongodb+srv://blogUser:DhiFoe3mjfqGLLhH@cluster0.9tzrq.mongodb.net/AppDB?retryWrites=true&w=majority" // ATLAS DB
+// MONGO DB ATLAS CONNECTION STRING
+const DB = "mongodb+srv://blogUser:DhiFoe3mjfqGLLhH@cluster0.9tzrq.mongodb.net/AppDB?retryWrites=true&w=majority"
 
 mongoose
     .connect(DB, {

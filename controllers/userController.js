@@ -69,10 +69,10 @@ exports.checkUsername = catchAsyncError(async (req, res, next) => {
     const user = await User.findOne({ username: req.params.userName });
 
     if (!user) {
-        return next(new AppError('This user does not exists', 404));
+        return next(new AppError('This user does not exists', 500));
     }
 
-    res.status(204).json({
+    res.status(201).json({
         status: 'User exists',
         data: user
     });
