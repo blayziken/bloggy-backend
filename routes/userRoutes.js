@@ -8,13 +8,13 @@ router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
 // To check if username is unique
-router.get('/checkUsername/:userName', userController.checkUsername);
+router.get('/checkUsername/:username', userController.checkUsername);
 
-router.patch('/updateUser', authController.checkToken, userController.updateUser);
+router.patch('/updateUser', authController.protect, userController.updateUser);
 
-router.delete('/deleteUser', authController.checkToken, userController.deleteUser);
+router.delete('/deleteUser', authController.protect, userController.deleteUser);
 
-router.get('/:userName', authController.checkToken, userController.getUser);
+router.get('/:userName', userController.getUser);
 
 
 

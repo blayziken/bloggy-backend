@@ -1,6 +1,7 @@
 const catchAsyncError = require('./../utils/catchAsync');
 const User = require('./../models/userModel');
 const AppError = require('./../utils/appError');
+let middleware = require('../controllers/middleware');
 
 exports.getUser = catchAsyncError(async (req, res, next) => {
 
@@ -17,27 +18,13 @@ exports.getUser = catchAsyncError(async (req, res, next) => {
 
 });
 
-exports.updateUser = catchAsyncError(async (req, res, next) => {
-    // console.log(req.file);
+exports.updateUser = catchAsyncError(async (req, res) => {
 
-    // 1) Create error if user POSTs password data
-    // if (req.body.password || req.body.passwordConfirm) {
-    //     return next(
-    //         new AppError(
-    //             'This route is not for password updates. Please use /updateMyPassword.',
-    //             400
-    //         )
-    //     );
-    // }
-
-    // // 2) Filtered out unwanted fields names that are not allowed to be updated
-    // const filteredBody = filterObj(req.body, 'name', 'email');
-    // if (req.file) filteredBody.photo = req.file.filename;
-
-    // 3) Update user document
-    const updatedUser = await User.findOneAndUpdate(req.user.username, req.body, {
+    const updatedUser = await User.findOneAndUpdate({ username: req.user.username }, req.body, {
         new: true
     })
+
+    console.log(updatedUser);
 
 
     res.status(200).json({
@@ -47,12 +34,39 @@ exports.updateUser = catchAsyncError(async (req, res, next) => {
         }
     });
 
-    next();
+    // next();
 });
 
-exports.deleteUser = catchAsyncError(async (req, res, next) => {
+// exports.updateUser = catchAsyncError(async (req, res, next) => {
 
-    const deletedUser = await User.findOneAndDelete(req.user.username);
+//     console.log('Update User');
+//     console.log(req.params.username);
+
+//     const user1 = await User.findOneAndUpdate(
+//         { username: req.params.username }, { $set: { password: req.body.password } }, (err, result) => {
+//             if (err) {
+//                 console.log(err);
+//             }
+
+//             // return res.status(500).json({ msg: err });
+
+//             const msg = {
+//                 msg: "Password successfully updated",
+//                 username: req.params.username,
+//             };
+//             return res.json(msg);
+
+//         }
+
+//     );
+//     console.log(user1);
+
+
+// });
+
+exports.deleteUser = catchAsyncError(async (req, res) => {
+
+    const deletedUser = await User.findOneAndDelete({ username: req.user.username });
 
     if (!deletedUser) {
         return next(new AppError('This user does not exist', 404));
@@ -64,9 +78,9 @@ exports.deleteUser = catchAsyncError(async (req, res, next) => {
 
 });
 
-exports.checkUsername = catchAsyncError(async (req, res, next) => {
+exports.checkUsername = catchAsyncError(async (req, res) => {
 
-    const user = await User.findOne({ username: req.params.userName }, (err, results) => {
+    const user = await User.findOne({ username: req.params.username }, (err, results) => {
         if (err) return res.status(500).json({ message: err });
     });
 
