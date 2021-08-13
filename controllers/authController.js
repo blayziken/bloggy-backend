@@ -1,7 +1,7 @@
 const User = require('./../models/userModel');
 const catchAsyncError = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
-const config = require('./../config');
+// const config = require('./../config');
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 
@@ -36,10 +36,12 @@ exports.login = (req, res) => {
         }
 
         if (result.password === req.body.password) {
-            let token = jwt.sign({ username: req.body.username }, config.key, {
+            let token = jwt.sign({ username: req.body.username }, process.env.JWT_SECRET, {
                 expiresIn: "24h",
             });
 
+
+            console.log(process.env.JWT_SECRET);
 
             res.json({
                 token: token,
