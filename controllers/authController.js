@@ -160,21 +160,17 @@ exports.checkToken = (req, res, next) => {
 exports.protect = async (req, res, next) => {
     //1) GET TOKEN AND CHECK IF IT ACTUALLY EXISTS
 
+    console.log('-------');
+    console.log(req.headers);
     let token;
-    // if (
-    //     req.headers.authorization &&
-    //     req.headers.authorization.startsWith('Bearer')
-    // ) {
-    //     token = req.headers.authorization.split(' ')[1];
-    // }
-
-    token = req.headers('Authorization');
-
-
-    let token1 = req.headers('authorization');
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        token = req.headers.authorization.split(' ')[1];
+    }
 
     console.log(token);
-    console.log(token1);
 
     if (!token) {
         return next(
