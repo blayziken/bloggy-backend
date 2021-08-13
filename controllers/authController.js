@@ -41,8 +41,8 @@ exports.login = (req, res) => {
 
             console.log(token);
 
-            res.json({
-                token,
+            res.status(200).json({
+                token: token,
                 msg: "Success"
             });
         } else {
@@ -160,16 +160,13 @@ exports.checkToken = (req, res, next) => {
 exports.protect = async (req, res, next) => {
     //1) GET TOKEN AND CHECK IF IT ACTUALLY EXISTS
 
-    // let token;
-    // if (
-    //     req.headers.authorization &&
-    //     req.headers.authorization.startsWith('Bearer')
-    // ) {
-    //     token = req.headers.authorization.split(' ')[1];
-    // }
-
-    let token = req.headers["authorization"];
-    token = token.slice(7, token.length);
+    let token;
+    if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith('Bearer')
+    ) {
+        token = req.headers.authorization.split(' ')[1];
+    }
 
     console.log(token);
 
