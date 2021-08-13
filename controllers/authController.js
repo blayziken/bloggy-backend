@@ -131,6 +131,8 @@ exports.checkToken = (req, res, next) => {
 
     token = token.slice(7, token.length);
 
+    console.log(token);
+
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
@@ -167,6 +169,9 @@ exports.protect = async (req, res, next) => {
     // }
 
     let token = req.headers["authorization"];
+    token = token.slice(7, token.length);
+
+    console.log(token);
 
     if (!token) {
         return next(

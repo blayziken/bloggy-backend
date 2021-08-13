@@ -12,7 +12,7 @@ router.get('/checkUsername/:username', userController.checkUsername);
 
 router.patch('/updateUser', authController.protect, userController.updateUser);
 
-router.delete('/deleteUser', authController.protect, userController.deleteUser);
+router.delete('/deleteUser', authController.checkToken, userController.deleteUser);
 
 router.get('/:userName', userController.getUser);
 
