@@ -27,7 +27,6 @@ exports.signup = catchAsyncError(async (req, res, next) => {
 
 // USER LOGIN
 exports.login = (req, res) => {
-    console.log('Login ROute');
     User.findOne({ username: req.body.username }, (err, result) => {
         if (err) return res.status(500).json({ msg: err.message });
 
@@ -39,9 +38,6 @@ exports.login = (req, res) => {
             let token = jwt.sign({ username: req.body.username }, process.env.JWT_SECRET, {
                 expiresIn: "24h",
             });
-
-
-            console.log(process.env.JWT_SECRET);
 
             res.json({
                 token: token,
