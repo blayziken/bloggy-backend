@@ -4,8 +4,8 @@ const Profile = require('./../models/profileModel');
 exports.addProfile = catchAsyncError(async (req, res, next) => {
 
     const newProfile = await Profile.create({
+        username: req.user.username,
         name: req.body.name,
-        username: req.body.username,
         contactNumber: req.body.contactNumber,
         profession: req.body.profession,
         DOB: req.body.DOB,
