@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true })); // middleware used to parse dat
 // 3) ROUTES
 app.use('/', homeRouter);
 app.use('/users', userRouter);
-app.use('/profile', profileRouter);
+app.use('/profiles', profileRouter);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
