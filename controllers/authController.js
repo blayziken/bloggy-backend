@@ -39,6 +39,8 @@ exports.login = (req, res) => {
                 expiresIn: "24h",
             });
 
+            console.log(token);
+
             res.json({
                 token: token,
                 msg: "Success"

@@ -1,7 +1,8 @@
 const catchAsyncError = require('./../utils/catchAsync');
 const Profile = require('./../models/profileModel');
 
-exports.addProfile = catchAsyncError(async (req, res, next) => {
+exports.addProfile = catchAsyncError(async (req, res) => {
+    console.log(req.user.username);
 
     const newProfile = await Profile.create({
         username: req.user.username,
@@ -20,7 +21,5 @@ exports.addProfile = catchAsyncError(async (req, res, next) => {
             newProfile
         }
     });
-
-    next();
 
 });
