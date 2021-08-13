@@ -42,7 +42,7 @@ exports.login = (req, res) => {
             console.log(token);
 
             res.json({
-                token: token,
+                token,
                 msg: "Success"
             });
         } else {
