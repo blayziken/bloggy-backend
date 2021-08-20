@@ -11,6 +11,7 @@ const app = express();
 // 1) GLOBAL MIDDLEWARES
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // middleware used to parse data coming from a FORM
+app.use("/uploads", express.static("uploads"));
 
 // 3) ROUTES
 app.use('/', homeRouter);

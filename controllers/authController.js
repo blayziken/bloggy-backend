@@ -161,7 +161,7 @@ exports.protect = async (req, res, next) => {
     //1) GET TOKEN AND CHECK IF IT ACTUALLY EXISTS
 
     console.log('-------');
-    console.log(req.headers);
+    // console.log(req.headers);
     let token;
     if (
         req.headers.authorization &&
@@ -170,7 +170,7 @@ exports.protect = async (req, res, next) => {
         token = req.headers.authorization.split(' ')[1];
     }
 
-    console.log(token);
+    // console.log(token);
     // kk
 
     if (!token) {
