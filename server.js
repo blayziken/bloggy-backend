@@ -12,10 +12,10 @@ dotenv.config({ path: './config.env' });
 
 const app = require('./app');
 
-const DB = 'mongodb://localhost:27017/blog-db'; // local DB connection
+// const DB = 'mongodb://localhost:27017/blog-db'; // local DB connection
 
 // MONGO DB ATLAS CONNECTION STRING
-// const DB = "mongodb+srv://blogUser:DhiFoe3mjfqGLLhH@cluster0.9tzrq.mongodb.net/AppDB?retryWrites=true&w=majority"
+const DB = "mongodb+srv://blogUser:DhiFoe3mjfqGLLhH@cluster0.9tzrq.mongodb.net/AppDB?retryWrites=true&w=majority"
 
 mongoose
     .connect(DB, {
@@ -28,7 +28,7 @@ mongoose
 
 const port = process.env.PORT || 8000;
 
-const server = app.listen(port, () => {
+const server = app.listen(port, "0.0.0.0", () => {
     console.log(`Server running on port 8000...`);
 });
 

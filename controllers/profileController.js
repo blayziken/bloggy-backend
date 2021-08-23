@@ -25,7 +25,7 @@ const multerFilter = (req, file, cb) => {
 
 const upload = multer({
     storage: multerStorage,
-    fileFilter: multerFilter,
+    // fileFilter: multerFilter,
     limits: {
         fileSize: 1024 * 1024 * 6,
     }
@@ -83,4 +83,61 @@ exports.addProfile = catchAsyncError(async (req, res) => {
         }
     });
 
+});
+
+
+// Check Profile
+exports.checkProfile = catchAsyncError(async (req, res) => {
+
+    const profile = await Profile.findOne({ username: req.user.username }, (err, results) => {
+        if (err) return res.status(500).json({ message: err });
+    });
+
+    if (profile) {
+        res.json({
+            status: true,
+            message: 'Profile exists'
+        });
+    } else {
+        res.json({
+            status: false,
+            message: 'No Profile'
+        });
+    }
+
+
+});
+
+// GET PROFILE
+exports.getProfileData = catchAsyncError(async (req, res, next) => {
+
+    const profile = await Profile.findOne({ username: req.user.username });
+
+    console.log(profile);
+    if (!profile) {
+        return next(new AppError('User has no Profile', 404));
+    }
+
+    res.status(200).json({
+        status: 'Success',
+        data: profile
+    });
+
+});
+
+exports.updateProfile = catchAsyncError(async (req, res) => {
+
+    const updatedProfile = await Profile.findOneAndUpdate({ username: req.user.username }, req.body, {
+        new: true
+    })
+
+    console.log(updatedProfile);
+
+
+    res.status(200).json({
+        status: 'Profile updated successfully',
+        data: {
+            user: updatedProfile
+        }
+    });
 });
