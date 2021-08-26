@@ -68,7 +68,6 @@ exports.addProfile = catchAsyncError(async (req, res) => {
     const newProfile = await Profile.create({
         username: req.user.username,
         name: req.body.name,
-        contactNumber: req.body.contactNumber,
         profession: req.body.profession,
         DOB: req.body.DOB,
         titleline: req.body.titleline,
