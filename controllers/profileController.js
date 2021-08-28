@@ -4,7 +4,6 @@ const Profile = require('./../models/profileModel');
 const multer = require('multer');
 const AppError = require('./../utils/appError');
 
-
 // MULTER CONFIGURATION: UPLOAD IMAGES
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -60,7 +59,6 @@ exports.addImage = catchAsyncError(async (req, res, next) => {
     });
 })
 
-
 // ADD A PROFILE
 exports.addProfile = catchAsyncError(async (req, res) => {
     console.log(req.user.username);
@@ -84,7 +82,6 @@ exports.addProfile = catchAsyncError(async (req, res) => {
 
 });
 
-
 // Check Profile
 exports.checkProfile = catchAsyncError(async (req, res) => {
 
@@ -103,8 +100,6 @@ exports.checkProfile = catchAsyncError(async (req, res) => {
             message: 'No Profile'
         });
     }
-
-
 });
 
 // GET PROFILE
@@ -129,9 +124,6 @@ exports.updateProfile = catchAsyncError(async (req, res) => {
     const updatedProfile = await Profile.findOneAndUpdate({ username: req.user.username }, req.body, {
         new: true
     })
-
-    console.log(updatedProfile);
-
 
     res.status(200).json({
         status: 'Profile updated successfully',

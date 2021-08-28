@@ -4,7 +4,6 @@ const BlogPost = require('./../models/blogPostModel');
 const AppError = require('./../utils/appError');
 const multer = require('multer');
 
-
 // MULTER CONFIGURATION: UPLOAD IMAGES
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -57,7 +56,7 @@ exports.addImage = catchAsyncError(async (req, res, next) => {
 
 exports.addPost = catchAsyncError(async (req, res) => {
 
-    const newPost = await BlogPost.create({
+    await BlogPost.create({
         username: req.user.username,
         title: req.body.title,
         body: req.body.body,
@@ -106,18 +105,3 @@ exports.deletePost = catchAsyncError(async (req, res) => {
         data: null
     });
 });
-
-// exports.getPosts = catchAsyncError(async (req, res) => {
-//     const posts = await BlogPost.findOne({ username: req.user.username });
-
-//     console.log(profile);
-//     if (!profile) {
-//         return next(new AppError('User has no Profile', 404));
-//     }
-
-//     res.status(200).json({
-//         status: 'Success',
-//         data: profile
-//     });
-
-// });

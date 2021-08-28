@@ -1,7 +1,6 @@
 const catchAsyncError = require('./../utils/catchAsync');
 const User = require('./../models/userModel');
 const AppError = require('./../utils/appError');
-let middleware = require('../controllers/middleware');
 
 exports.getUser = catchAsyncError(async (req, res, next) => {
 
@@ -18,14 +17,14 @@ exports.getUser = catchAsyncError(async (req, res, next) => {
 
 });
 
-exports.updateUser = catchAsyncError(async (req, res) => {
+exports.updateUser = async (req, res) => {
 
-    const updatedUser = await User.findOneAndUpdate({ username: req.user.username }, req.body, {
+    const updatedUser = await User.findOneAndUpdate({ username: req.params.username }, req.body, {
         new: true
+    }).catch(error => {
+        console.log(error);
+        return (new AppError('This user does not exist', 404));
     })
-
-    console.log(updatedUser);
-
 
     res.status(200).json({
         status: 'User successfully updated',
@@ -33,36 +32,7 @@ exports.updateUser = catchAsyncError(async (req, res) => {
             user: updatedUser
         }
     });
-
-    // next();
-});
-
-// exports.updateUser = catchAsyncError(async (req, res, next) => {
-
-//     console.log('Update User');
-//     console.log(req.params.username);
-
-//     const user1 = await User.findOneAndUpdate(
-//         { username: req.params.username }, { $set: { password: req.body.password } }, (err, result) => {
-//             if (err) {
-//                 console.log(err);
-//             }
-
-//             // return res.status(500).json({ msg: err });
-
-//             const msg = {
-//                 msg: "Password successfully updated",
-//                 username: req.params.username,
-//             };
-//             return res.json(msg);
-
-//         }
-
-//     );
-//     console.log(user1);
-
-
-// });
+};
 
 exports.deleteUser = catchAsyncError(async (req, res) => {
 
@@ -95,6 +65,4 @@ exports.checkUsername = catchAsyncError(async (req, res) => {
             message: 'User does not exist'
         });
     }
-
-
 });

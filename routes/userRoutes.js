@@ -10,7 +10,7 @@ router.post('/login', authController.login);
 // To check if username is unique
 router.get('/checkUsername/:username', userController.checkUsername);
 
-router.patch('/updateUser', authController.protect, userController.updateUser);
+router.patch('/updateUser/:username', userController.updateUser);
 
 router.delete('/deleteUser', authController.protect, userController.deleteUser);
 
