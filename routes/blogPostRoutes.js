@@ -5,8 +5,6 @@ const authController = require('./../controllers/authController');
 
 router.post('/add', authController.protect, blogPostController.addPost);
 
-// router.get('/posts', authController.protect, blogPostController.getPosts);
-
 router.patch('/:id/addCoverImage', authController.protect, blogPostController.uploadImage, blogPostController.addImage);
 
 router.get('/myBlogPosts', authController.protect, blogPostController.getMyBlogPosts);

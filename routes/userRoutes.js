@@ -16,6 +16,4 @@ router.delete('/deleteUser', authController.protect, userController.deleteUser);
 
 router.get('/:userName', userController.getUser);
 
-
-
 module.exports = router;

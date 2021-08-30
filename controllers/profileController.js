@@ -25,13 +25,10 @@ const multerFilter = (req, file, cb) => {
 const upload = multer({
     storage: multerStorage,
     // fileFilter: multerFilter,
-    limits: {
-        fileSize: 1024 * 1024 * 6,
-    }
 });
 
 exports.uploadImage = upload.single("img");
-// upload.single("img")
+
 exports.addImage = catchAsyncError(async (req, res, next) => {
     console.log('------------------- ' + req.user.username);
 
@@ -107,8 +104,9 @@ exports.getProfileData = catchAsyncError(async (req, res, next) => {
 
     const profile = await Profile.findOne({ username: req.user.username });
 
-    console.log(profile);
     if (!profile) {
+        profile = null;
+
         return next(new AppError('User has no Profile', 404));
     }
 
