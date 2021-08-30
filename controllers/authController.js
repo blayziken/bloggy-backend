@@ -12,6 +12,11 @@ exports.signup = catchAsyncError(async (req, res, next) => {
         contactNumber: req.body.contactNumber,
         email: req.body.email,
         password: req.body.password,
+    }).catch(err => {
+        res.status(500).json({
+            status: 'Error, please try again',
+            err
+        })
     });
 
     res.status(200).json({
@@ -29,7 +34,7 @@ exports.login = (req, res) => {
         if (err) return res.status(500).json({ msg: err.message });
 
         if (result === null) {
-            return res.status(403).json("Username incorrect");
+            return res.status(403).json("Username does not exist");
         }
 
         if (result.password === req.body.password) {
@@ -48,35 +53,6 @@ exports.login = (req, res) => {
         }
     });
 };
-
-// exports.checkToken = (req, res, next) => {
-//     let token = req.headers["authorization"];
-
-//     token = token.slice(7, token.length);
-
-//     console.log(token);
-
-//     if (token) {
-//         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-//             if (err) {
-//                 return res.json({
-//                     status: false,
-//                     msg: "token is invalid"
-//                 })
-//             } else {
-//                 req.decoded = decoded;
-//                 next();
-//             }
-//         })
-//     } else {
-//         return res.json({
-//             status: false,
-//             msg: "Token is not provided"
-//         })
-//     }
-//     next();
-
-// }
 
 // VERIFY IF TOKEN IS CORRECT
 exports.protect = async (req, res, next) => {

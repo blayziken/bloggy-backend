@@ -26,12 +26,12 @@ const upload = multer({
     storage: multerStorage,
     // fileFilter: multerFilter,
     limits: {
-        fileSize: 1024 * 1024 * 6,
+        fileSize: 1024 * 1024 * 10,
     }
 });
 
 exports.uploadImage = upload.single("img");
-// upload.single("img")
+
 exports.addImage = catchAsyncError(async (req, res, next) => {
     const document = await BlogPost.findOneAndUpdate({ _id: req.params.id },
         {
